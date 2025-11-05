@@ -4,7 +4,7 @@ from biblioteca.arvore_avl import ArvoreAVL
 if __name__ == "__main__":
     arvore = ArvoreAVL()
 
-    livro_exemplo = Livro("Dom Casmurro", "Machado de Assis", 1899)
+    livro_exemplo = Livro("Titulo", "Autor", 0000)
     arvore.inserir(livro_exemplo)
 
     print("Sistema da biblioteca iniciado com sucesso!")
