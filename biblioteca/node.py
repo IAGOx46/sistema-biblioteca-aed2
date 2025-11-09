@@ -1,3 +1,5 @@
+from biblioteca.livro import Livro
+
 class Node:
     def __init__(self, livro):
         self.livro = livro
