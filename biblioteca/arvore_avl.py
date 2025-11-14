@@ -94,68 +94,59 @@ class ArvoreAVL:
     def remove(self, livro):
         self.raiz = self._remover_recurs(self.raiz, livro)
 
+
     def _remover_recurs(self, node, livro):
         if not node:
             return node
 
         if livro < node.livro:
             node.esquerda = self._remover_recurs(node.esquerda, livro)
+
         elif livro > node.livro:
             node.direita = self._remover_recurs(node.direita, livro)
+
         else:
-         
+            # Caso 1 e 2: nó com 0 ou 1 filho
             if not node.esquerda:
                 return node.direita
+
             elif not node.direita:
                 return node.esquerda
 
-            sucessor = self._minimo(node.direita)
+            # Caso 3: nó com dois filhos -> usar sucessor
+            sucessor = self.minValueNode(node.direita)
             node.livro = sucessor.livro
             node.direita = self._remover_recurs(node.direita, sucessor.livro)
 
+        # Atualiza altura
         node.altura = 1 + max(self.altura(node.esquerda), self.altura(node.direita))
 
+        # Rebalanceamento AVL
         balanceamento = self.fator_balanceamento(node)
 
+        # Rotação LL
         if balanceamento > 1 and self.fator_balanceamento(node.esquerda) >= 0:
             return self.rotacao_direita(node)
 
+        # Rotação LR
         if balanceamento > 1 and self.fator_balanceamento(node.esquerda) < 0:
             node.esquerda = self.rotacao_esquerda(node.esquerda)
             return self.rotacao_direita(node)
 
+        # Rotação RR
         if balanceamento < -1 and self.fator_balanceamento(node.direita) <= 0:
             return self.rotacao_esquerda(node)
 
+        # Rotação RL
         if balanceamento < -1 and self.fator_balanceamento(node.direita) > 0:
             node.direita = self.rotacao_direita(node.direita)
             return self.rotacao_esquerda(node)
 
         return node
 
-    def _minimo(self, node):
+
+    def minValueNode(self, node):
         atual = node
         while atual.esquerda is not None:
             atual = atual.esquerda
         return atual
-
-    def _minimo(self, node):
-        atual = node
-        while atual.esquerda is not None:
-            atual = atual.esquerda
-        return atual
-
-    # --------------------------------------------------------------------
-    # MÉTODO DE EXIBIÇÃO — SOMENTE PARA TESTES
-    # --------------------------------------------------------------------
-    def exibir_em_ordem(self):
-        self._exibir_rec(self.raiz)
-        print()
-
-    def _exibir_rec(self, node):
-        if not node:
-            return
-        self._exibir_rec(node.esquerda)
-        print(node.livro.id, end=" ")
-        self._exibir_rec(node.direita)
-
