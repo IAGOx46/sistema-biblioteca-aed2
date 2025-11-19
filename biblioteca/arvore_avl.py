@@ -187,6 +187,7 @@ class ArvoreAVL:
         print("\n--- Livros ordenados pelo ID ---")
         self.imprimir_in_order()
 
+    #visualização
     def visualizar(self):
         print("\n--- Visualização da Árvore AVL ---")
         self._print_tree(self.raiz, 0)
