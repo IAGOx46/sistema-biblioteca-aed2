@@ -187,10 +187,64 @@ class App:
         tk.Frame(left_card, bg="#E6EEF9", height=1).pack(fill="x")
 
         # scrollable area (only options scroll)
+        # ---------- Área rolável de opções ----------
         area = tk.Frame(left_card, bg=SURFACE)
         area.pack(fill="both", expand=True)
 
-        canvas_scroll = tk.Canvas(area, bg=SURFACE, highlightthickness=0)
+        canvas_scroll = tk.Canvas(
+            area,
+            bg=SURFACE,
+            highlightthickness=0
+        )
+        canvas_scroll.pack(
+            side="left",
+            fill="both",
+            expand=True,
+            padx=(8, 0),
+            pady=8
+        )
+
+        # Scrollbar vertical
+        vscroll = ttk.Scrollbar(
+            area,
+            orient="vertical",
+            command=canvas_scroll.yview,
+            style="Material.Vertical.TScrollbar"
+        )
+        vscroll.pack(side="right", fill="y", padx=(0, 8), pady=8)
+
+        canvas_scroll.configure(yscrollcommand=vscroll.set)
+        # Frame interno
+        content = tk.Frame(canvas_scroll, bg=SURFACE)
+        content_id = canvas_scroll.create_window(
+            (0, 0),
+            window=content,
+            anchor="nw"
+        )
+
+        # Atualiza scrollregion sempre que conteúdo mudar
+        def on_content_config(event):
+            canvas_scroll.configure(scrollregion=canvas_scroll.bbox("all"))
+
+        content.bind("<Configure>", on_content_config)
+        # Mantém a largura interna igual à largura do canvas
+        def on_canvas_config(event):
+            canvas_scroll.itemconfig(content_id, width=event.width)
+
+        canvas_scroll.bind("<Configure>", on_canvas_config)
+
+        # Suporte ao scroll com mouse wheel
+        if IS_MAC:
+            canvas_scroll.bind_all(
+                "<MouseWheel>",
+                lambda ev: canvas_scroll.yview_scroll(int(-1 * ev.delta), "units")
+            )
+        else:
+            canvas_scroll.bind_all(
+                "<MouseWheel>",
+                lambda ev: canvas_scroll.yview_scroll(int(-1 * (ev.delta / 120)), "units")
+            )
+
         canvas_scroll.pack(side="left", fill="both", expand=True, padx=(8, 0), pady=8)
 
         vscroll = ttk.Scrollbar(area, orient="vertical", command=canvas_scroll.yview, style="Material.Vertical.TScrollbar")
