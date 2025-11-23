@@ -197,3 +197,20 @@ class ArvoreAVL:
             self._print_tree(node.direita, nivel + 1)
             print("    " * nivel + f"→ (ID {node.livro.id})")
             self._print_tree(node.esquerda, nivel + 1)
+
+    def busca(self, livro):
+        return self._busca_recursiva(self.raiz, livro)
+
+    def _busca_recursiva(self, node, livro):
+        if node is None:
+            return None
+    
+        if livro.id == node.livro.id:
+            return node.livro  # << retorna o livro encontrado
+        
+        elif livro.id < node.livro.id:
+            return self._busca_recursiva(node.esquerda, livro)
+    
+        else:
+            return self._busca_recursiva(node.direita, livro)
+

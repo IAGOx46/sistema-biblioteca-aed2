@@ -377,21 +377,7 @@ class App:
         self.atualizar_info()
 
     def buscar(self):
-        try:
-            id_ = int(self.entry_id.entry.get().strip())
-        except Exception:
-            messagebox.showerror("Erro", "ID inválido.")
-            return
-
-        if hasattr(self.arvore, "busca"):
-            achou = self.arvore.busca(Livro(id_, "", "", ""))
-        else:
-            achou = None
-
-        if achou:
-            messagebox.showinfo("Encontrado", "Livro encontrado.")
-        else:
-            messagebox.showwarning("Não encontrado", "Livro não existe.")
+        self.arvore.busca()
 
     def listar_in_order(self):
         print("\n--- IN ORDER ---")
