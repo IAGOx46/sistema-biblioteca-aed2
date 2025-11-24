@@ -1,6 +1,6 @@
 from biblioteca.livro import Livro
 from biblioteca.node import Node
-
+import time
 class ArvoreAVL:
     def __init__(self):
         self.raiz = None
@@ -204,13 +204,24 @@ class ArvoreAVL:
     def _busca_recursiva(self, node, livro):
         if node is None:
             return None
-    
+
         if livro.id == node.livro.id:
-            return node.livro  # << retorna o livro encontrado
-        
+            return node.livro
+
         elif livro.id < node.livro.id:
             return self._busca_recursiva(node.esquerda, livro)
-    
+
         else:
             return self._busca_recursiva(node.direita, livro)
+
+
+
+    def buscar_com_tempo(self, livro):
+        inicio = time.perf_counter()
+        tempo = self.busca(livro)
+        fim = time.perf_counter()
+
+        return (fim - inicio)*1000  # tempo em ms
+
+
 

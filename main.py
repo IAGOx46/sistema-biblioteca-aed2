@@ -377,7 +377,32 @@ class App:
         self.atualizar_info()
 
     def buscar(self):
-        self.arvore.busca()
+        try:
+            id_ = int(self.entry_id.entry.get().strip())
+        except Exception:
+            messagebox.showerror("Erro", "ID inválido.")
+            return
+
+        livro = Livro(id_, "", "", "")
+
+        encontrado = self.arvore.busca(livro)
+        tempo = self.arvore.buscar_com_tempo(livro)
+        if encontrado:
+            messagebox.showinfo(
+                "Encontrado",
+                f"Tempo: {tempo:.4f}\n"
+                f"ID: {encontrado.id}\n"
+                f"Título: {encontrado.titulo}\n"
+                f"Autor: {encontrado.autor}\n"
+                f"Ano: {encontrado.ano}"
+            )
+        else:
+            messagebox.showwarning(
+                "Não encontrado",
+                "Livro NÃO encontrado na árvore."
+            )
+
+
 
     def listar_in_order(self):
         print("\n--- IN ORDER ---")
