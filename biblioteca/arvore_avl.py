@@ -50,7 +50,7 @@ class ArvoreAVL:
     def inserir(self, livro):
         
         self.raiz = self._inserir_recurs(livro, self.raiz)
-        
+
     #Insere recursivamente um novo nó
     def _inserir_recurs(self, livro, node):
         
@@ -184,21 +184,7 @@ class ArvoreAVL:
             self._pos_order(node.direita)
             print(f"ID: {node.livro.id} | Título: {node.livro.titulo}")
 
-    def imprimir_livros_por_id(self):
-        print("\n--- Livros ordenados pelo ID ---")
-        self.imprimir_in_order()
-
-    #visualização
-    def visualizar(self):
-        print("\n--- Visualização da Árvore AVL ---")
-        self._print_tree(self.raiz, 0)
-
-    def _print_tree(self, node, nivel):
-        if node is not None:
-            self._print_tree(node.direita, nivel + 1)
-            print("    " * nivel + f"→ (ID {node.livro.id})")
-            self._print_tree(node.esquerda, nivel + 1)
-
+   #Busca
     def busca(self, livro):
         return self._busca_recursiva(self.raiz, livro)
 
@@ -214,8 +200,6 @@ class ArvoreAVL:
 
         else:
             return self._busca_recursiva(node.direita, livro)
-
-
 
     def buscar_com_tempo(self, livro):
         inicio = time.perf_counter()

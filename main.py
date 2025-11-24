@@ -68,9 +68,8 @@ class RoundedEntry(tk.Frame):
         return self.entry.delete(a, b)
 
 
-# =========================
-# Styles (ttk)
-# =========================
+
+# Styles
 def aplicar_estilos(root):
     style = ttk.Style(root)
     try:
@@ -93,9 +92,8 @@ def aplicar_estilos(root):
     style.configure("Material.TLabel", background=BG, foreground=TEXT, font=("Segoe UI", 10))
 
 
-# =========================
+
 # Desenho da Árvore
-# =========================
 class ArvoreDesenho:
     def __init__(self, canvas):
         self.canvas = canvas
@@ -247,9 +245,9 @@ class App:
                  font=("Segoe UI", 12, "bold")).pack(anchor="w", padx=12, pady=(12, 6))
 
         buttons = [
-            ("Inserir", self.inserir),
-            ("Remover", self.remover),
-            ("Buscar", self.buscar),
+            ("Inserir Livro", self.inserir),
+            ("Emprestar Livro", self.remover),
+            ("Buscar Livro", self.buscar),
             ("In-Order", self.listar_in_order),
             ("Pré-Order", self.listar_pre),
             ("Pós-Order", self.listar_pos),
@@ -267,7 +265,7 @@ class App:
 
         # ---------- Right area ----------
         right_card = tk.Frame(root, bg=BG)
-        right_card.place(x=442, y=10, width=850, height=692)   # ALTERADO
+        right_card.place(x=442, y=10, width=850, height=692)
 
         title_bar = tk.Frame(right_card, bg=CANVAS_BG_TOP)
         title_bar.pack(fill="x")
@@ -305,7 +303,7 @@ class App:
 
         self.atualizar_info()
 
-    # ---------- Operations ----------
+    
     def carregar_json(self):
         caminho = filedialog.askopenfilename(
             title="Selecionar arquivo",
@@ -389,7 +387,7 @@ class App:
         tempo = self.arvore.buscar_com_tempo(livro)
         if encontrado:
             messagebox.showinfo(
-                "Encontrado",
+                "Livro Disponível",
                 f"Tempo: {tempo:.4f}\n"
                 f"ID: {encontrado.id}\n"
                 f"Título: {encontrado.titulo}\n"
@@ -399,7 +397,7 @@ class App:
         else:
             messagebox.showwarning(
                 "Não encontrado",
-                "Livro NÃO encontrado na árvore."
+                "Livro não encontrado."
             )
 
 
@@ -447,9 +445,8 @@ class App:
         self._set_status(f"Pronto — nós: {n}")
 
 
-# =========================
-# Run
-# =========================
+
+#Execuçãp
 if __name__ == "__main__":
     root = tk.Tk()
     app = App(root)
