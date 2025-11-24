@@ -5,17 +5,17 @@ class ArvoreAVL:
     def __init__(self):
         self.raiz = None
 
-  
+    #Retorna a altura do nó informado
     def altura(self, node):
         
         return node.altura if node else 0
-
+    #Calcula o Fator de balanciamento
     def fator_balanceamento(self, node):
         
         return self.altura(node.esquerda) - self.altura(node.direita) if node else 0
 
   
-
+    #Realiza uma rotação simples para a direita
     def rotacao_direita(self, y):
         x = y.esquerda
         T2 = x.direita
@@ -30,7 +30,7 @@ class ArvoreAVL:
 
         
         return x
-
+    #Realiza uma rotação simples para a esquerda
     def rotacao_esquerda(self, x):
         y = x.direita
         T2 = y.esquerda
@@ -46,11 +46,12 @@ class ArvoreAVL:
   
         return y
 
- 
+    #Método que insere um livro na AVL atualizando a raiz.
     def inserir(self, livro):
         
         self.raiz = self._inserir_recurs(livro, self.raiz)
-
+        
+    #Insere recursivamente um novo nó
     def _inserir_recurs(self, livro, node):
         
         if node is None:
@@ -218,7 +219,6 @@ class ArvoreAVL:
 
     def buscar_com_tempo(self, livro):
         inicio = time.perf_counter()
-        tempo = self.busca(livro)
         fim = time.perf_counter()
 
         return (fim - inicio)*1000  # tempo em ms
