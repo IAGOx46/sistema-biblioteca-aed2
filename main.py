@@ -6,15 +6,13 @@ import platform
 from biblioteca.arvore_avl import ArvoreAVL
 from biblioteca.livro import Livro
 
-# =========================
-# Material Blue Palette (A)
-# =========================
+
 BG = "#FFFFFF"
 SURFACE = "#FAFAFC"
-PANEL = "#E3F2FD"        # leve azul
-PRIMARY = "#1E88E5"      # azul principal
+PANEL = "#E3F2FD"        
+PRIMARY = "#1E88E5"      
 PRIMARY_DARK = "#1565C0"
-ACCENT = "#7E57C2"       # roxo leve para detalhes
+ACCENT = "#7E57C2"       
 GREEN = "#43A047"
 TEXT = "#0F1724"
 MUTED = "#6B7280"
@@ -27,9 +25,7 @@ ENTRY_BORDER = "#E3F2FD"
 IS_MAC = platform.system() == "Darwin"
 
 
-# =========================
-# Helpers: hover button and rounded entry
-# =========================
+
 def material_button(master, text, cmd, bg=PRIMARY, fg=BUTTON_FG, pady=8, padx=12):
     btn = tk.Frame(master, bg=bg, bd=0)
     label = tk.Label(btn, text=text, bg=bg, fg=fg, font=("Segoe UI", 10, "bold"), cursor="hand2")
@@ -69,7 +65,7 @@ class RoundedEntry(tk.Frame):
 
 
 
-# Styles
+
 def aplicar_estilos(root):
     style = ttk.Style(root)
     try:
@@ -93,7 +89,7 @@ def aplicar_estilos(root):
 
 
 
-# Desenho da Árvore
+
 class ArvoreDesenho:
     def __init__(self, canvas):
         self.canvas = canvas
@@ -163,9 +159,8 @@ class ArvoreDesenho:
             self._desenhar_no(no.direita, x + deslocamento, y + 100, deslocamento // 2)
 
 
-# =========================
-# Aplicação principal
-# =========================
+
+
 class App:
     def __init__(self, root):
         self.root = root
@@ -177,12 +172,12 @@ class App:
         aplicar_estilos(root)
         self.arvore = ArvoreAVL()
 
-        # ---------- Left panel: sombra + card ----------
+        
         shadow = tk.Frame(root, bg="#E3F2FD")
-        shadow.place(x=16, y=14, width=420, height=692)        # ALTERADO
+        shadow.place(x=16, y=14, width=420, height=692)        
 
         left_card = tk.Frame(root, bg=SURFACE, bd=0)
-        left_card.place(x=12, y=10, width=420, height=692)     # ALTERADO
+        left_card.place(x=12, y=10, width=420, height=692)     
 
         header = tk.Frame(left_card, bg=PRIMARY)
         header.pack(fill="x")
@@ -191,7 +186,7 @@ class App:
 
         tk.Frame(left_card, bg="#E6EEF9", height=1).pack(fill="x")
 
-        # ---------- Área rolável ----------
+        
         area = tk.Frame(left_card, bg=SURFACE)
         area.pack(fill="both", expand=True)
 
@@ -224,7 +219,7 @@ class App:
         else:
             canvas_scroll.bind_all("<MouseWheel>", lambda ev: canvas_scroll.yview_scroll(int(-1 * (ev.delta / 120)), "units"))
 
-        # ---------- Form ----------
+        
         tk.Label(content, text="Cadastro de Livros", bg=SURFACE, fg=TEXT,
                  font=("Segoe UI", 12, "bold")).pack(anchor="w", padx=12, pady=(6, 2))
 
@@ -240,7 +235,7 @@ class App:
         self.entry_autor = mk_entry("Autor:")
         self.entry_ano = mk_entry("Ano:")
 
-        # ---------- Buttons ----------
+        
         tk.Label(content, text="Operações", bg=SURFACE, fg=PRIMARY_DARK,
                  font=("Segoe UI", 12, "bold")).pack(anchor="w", padx=12, pady=(12, 6))
 
@@ -263,7 +258,7 @@ class App:
                              anchor="w", font=("Segoe UI", 9))
         self.info.pack(fill="x", padx=14, pady=(8, 18))
 
-        # ---------- Right area ----------
+        
         right_card = tk.Frame(root, bg=BG)
         right_card.place(x=442, y=10, width=850, height=692)
 
@@ -446,7 +441,7 @@ class App:
 
 
 
-#Execuçãp
+
 if __name__ == "__main__":
     root = tk.Tk()
     app = App(root)
