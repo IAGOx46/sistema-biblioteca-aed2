@@ -1,3 +1,3 @@
-# Este arquivo indica que a pasta "biblioteca" é um pacote Python, pode ficar vazio. É apenas para organização.
+# Indica que a pasta BIBLIOTECA é um pacote Python, pode ficar vazio e é apenas para organização.
 
 
