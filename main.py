@@ -370,31 +370,50 @@ class App:
         self.atualizar_info()
 
     def buscar(self):
-        try:
-            id_ = int(self.entry_id.entry.get().strip())
-        except Exception:
-            messagebox.showerror("Erro", "ID inválido.")
+    # obtém título e id
+        titulo = self.entry_titulo.get().strip()
+        id_text = self.entry_id.get().strip()
+
+    # Busca por Titulo
+        if titulo:
+            try:
+                resultados, tempo = self.arvore.buscar_por_titulo_com_tempo(titulo)
+            except AttributeError:
+            
+                resultados = self.arvore.buscar_por_titulo(titulo)
+                tempo = None
+
+            if resultados:
+                linhas = [f"ID: {l.id} | Título: {l.titulo}" for l in resultados]
+                texto = "\n".join(linhas)
+                if tempo is not None:
+                    messagebox.showinfo("Resultados",
+                                    f"{len(resultados)} livro(s) encontrado(s) em {tempo:.2f} ms\n\n{texto}")
+                else:
+                    messagebox.showinfo("Resultados",
+                                    f"{len(resultados)} livro(s) encontrado(s)\n\n{texto}")
+            else:
+                messagebox.showinfo("Resultados", "Nenhum livro encontrado pelo título informado.")
             return
 
-        livro = Livro(id_, "", "", "")
+    #Busca por ID
+        if id_text:
+            try:
+                id_num = int(id_text)
+            except ValueError:
+                messagebox.showerror("Erro", "ID inválido.")
+                return
 
-        encontrado = self.arvore.busca(livro)
-        tempo = self.arvore.buscar_com_tempo(livro)
-        if encontrado:
-            messagebox.showinfo(
-                "Livro Disponível",
-                f"Tempo: {tempo:.4f}\n"
-                f"ID: {encontrado.id}\n"
-                f"Título: {encontrado.titulo}\n"
-                f"Autor: {encontrado.autor}\n"
-                f"Ano: {encontrado.ano}"
-            )
+        livro_busca = Livro(id_num, "", "", "")
+        resultado = self.arvore.busca(livro_busca)
+        if resultado:
+            messagebox.showinfo("Resultado", f"Encontrado: {resultado.titulo}")
         else:
-            messagebox.showwarning(
-                "Não encontrado",
-                "Livro não encontrado."
-            )
+            messagebox.showinfo("Resultado", "Livro não encontrado.")
+        return
 
+    # Nenhum campo preenchido
+    messagebox.showinfo("Buscar", "Informe um título ou um ID.")
 
 
     def listar_in_order(self):

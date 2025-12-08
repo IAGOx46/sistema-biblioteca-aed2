@@ -1,6 +1,7 @@
 from biblioteca.livro import Livro
 from biblioteca.node import Node
 import time
+
 class ArvoreAVL:
     def __init__(self):
         self.raiz = None
@@ -34,15 +35,12 @@ class ArvoreAVL:
     def rotacao_esquerda(self, x):
         y = x.direita
         T2 = y.esquerda
-
         
         y.esquerda = x
         x.direita = T2
-
         
         x.altura = 1 + max(self.altura(x.esquerda), self.altura(x.direita))
         y.altura = 1 + max(self.altura(y.esquerda), self.altura(y.direita))
-
   
         return y
 
@@ -89,7 +87,7 @@ class ArvoreAVL:
 
         return node
 
-#Emelly
+    #Remoção
 
     def remove(self, livro):
         self.raiz = self._remover_recurs(self.raiz, livro)
@@ -151,8 +149,8 @@ class ArvoreAVL:
             atual = atual.esquerda
         return atual
     
-    #Rhanna
-    #Métodos de impressão
+    
+    #Métodos de impressão e Busca
 
     def imprimir_in_order(self):
         print("\n--- Impressão In-Order (ordenada por ID) ---")
@@ -200,12 +198,45 @@ class ArvoreAVL:
 
         else:
             return self._busca_recursiva(node.direita, livro)
+        
+    def buscar_por_titulo(self, titulo, parcial=True):
+    
+        termo = (titulo or "").strip().lower()
+        resultados = []
 
-    def buscar_com_tempo(self, livro):
+        if termo == "":
+            return resultados
+    
+        self._buscar_por_titulo_rec(self.raiz, termo, resultados, parcial)
+        return resultados
+
+    def _buscar_por_titulo_rec(self, node, termo, resultados, parcial):
+        if node is None:
+            return
+        titulo_node = (getattr(node.livro, "titulo", "") or "").lower()
+        if parcial:
+            if termo in titulo_node:
+                resultados.append(node.livro)
+        else:
+            if termo == titulo_node:
+                resultados.append(node.livro)
+            
+        self._buscar_por_titulo_rec(node.esquerda, termo, resultados, parcial)
+        self._buscar_por_titulo_rec(node.direita, termo, resultados, parcial)
+
+
+    def busca_com_tempo(self, livro):
         inicio = time.perf_counter()
+        resultado = self.busca(livro)
         fim = time.perf_counter()
+        return resultado, (fim - inicio) * 1000
 
-        return (fim - inicio)*1000  # tempo em ms
 
 
+    def buscar_por_titulo_com_tempo(self, titulo, parcial=True):
+        inicio = time.perf_counter()
+        resultados = self.buscar_por_titulo(titulo, parcial=parcial)
+        fim = time.perf_counter()
+        tempo_ms = (fim - inicio) * 1000
+        return resultados, tempo_ms
 
