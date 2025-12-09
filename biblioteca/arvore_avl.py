@@ -150,7 +150,7 @@ class ArvoreAVL:
         return atual
     
     
-    #Métodos de impressão e Busca
+    #Métodos de impressão e Buca
 
     def imprimir_in_order(self):
         print("\n--- Impressão In-Order (ordenada por ID) ---")
