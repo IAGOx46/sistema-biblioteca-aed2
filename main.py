@@ -12,8 +12,6 @@ SURFACE = "#FAFAFC"
 PANEL = "#E3F2FD"        
 PRIMARY = "#1E88E5"      
 PRIMARY_DARK = "#1565C0"
-ACCENT = "#7E57C2"       
-GREEN = "#43A047"
 TEXT = "#0F1724"
 MUTED = "#6B7280"
 CANVAS_BG_TOP = "#F3F8FF"
@@ -342,20 +340,27 @@ class App:
     def inserir(self):
         try:
             id_ = int(self.entry_id.entry.get().strip())
-        except Exception:
+        except:
             messagebox.showerror("Erro", "ID inválido.")
-            self._set_status("Erro: ID inválido")
             return
 
-        livro = Livro(id_,
-                      self.entry_titulo.entry.get(),
-                      self.entry_autor.entry.get(),
-                      self.entry_ano.entry.get())
+        livro = Livro(
+            id_,
+            self.entry_titulo.entry.get(),
+            self.entry_autor.entry.get(),
+            self.entry_ano.entry.get()
+        )
 
-        self.arvore.inserir(livro)
+        sucesso = self.arvore.inserir(livro)
+
+        if not sucesso:
+            messagebox.showerror("Erro", "Já existe um livro com este ID.")
+            return
+
         self.atualizar_desenho()
-        messagebox.showinfo("OK", "Livro inserido.")
         self.atualizar_info()
+        messagebox.showinfo("OK", "Livro inserido com sucesso!")
+
 
     def remover(self):
         try:

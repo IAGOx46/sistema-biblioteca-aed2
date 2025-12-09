@@ -46,46 +46,50 @@ class ArvoreAVL:
 
     #Método que insere um livro na AVL atualizando a raiz.
     def inserir(self, livro):
-        
-        self.raiz = self._inserir_recurs(livro, self.raiz)
+        self.raiz, sucesso = self._inserir_recurs(self.raiz, livro)
+        return sucesso
 
     #Insere recursivamente um novo nó
-    def _inserir_recurs(self, livro, node):
-        
+    def _inserir_recurs(self, node, livro):
         if node is None:
-            return Node(livro)
+            return Node(livro), True  # inserido com sucesso
 
+    # Comparação correta pelo ID
         if livro < node.livro:
-            node.esquerda = self._inserir_recurs(livro, node.esquerda)
-        elif livro > node.livro:
-            node.direita = self._inserir_recurs(livro, node.direita)
-        else:
-            return node  
+            node.esquerda, sucesso = self._inserir_recurs(node.esquerda, livro)
 
-        
+        elif livro > node.livro:
+            node.direita, sucesso = self._inserir_recurs(node.direita, livro)
+
+        else:
+            return node, False  # ID duplicado
+
+    # Atualiza altura
         node.altura = 1 + max(self.altura(node.esquerda), self.altura(node.direita))
 
-        balanceamento = self.fator_balanceamento(node)
+    # Calcula o balanceamento
+        balance = self.fator_balanceamento(node)
 
+    # Casos de rotação (AVL)
+    # LL
+        if balance > 1 and livro < node.esquerda.livro:
+            return self.rotacao_direita(node), sucesso
 
-        if balanceamento > 1 and livro < node.esquerda.livro:
-            return self.rotacao_direita(node)
+    # RR
+        if balance < -1 and livro > node.direita.livro:
+            return self.rotacao_esquerda(node), sucesso
 
-      
-        if balanceamento < -1 and livro > node.direita.livro:
-            return self.rotacao_esquerda(node)
-
-        
-        if balanceamento > 1 and livro > node.esquerda.livro:
+    # LR
+        if balance > 1 and livro > node.esquerda.livro:
             node.esquerda = self.rotacao_esquerda(node.esquerda)
-            return self.rotacao_direita(node)
+            return self.rotacao_direita(node), sucesso
 
-        
-        if balanceamento < -1 and livro < node.direita.livro:
+    # RL
+        if balance < -1 and livro < node.direita.livro:
             node.direita = self.rotacao_direita(node.direita)
-            return self.rotacao_esquerda(node)
+            return self.rotacao_esquerda(node), sucesso
 
-        return node
+        return node, sucesso
 
     #Remoção
 
