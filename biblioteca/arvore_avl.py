@@ -16,7 +16,7 @@ class ArvoreAVL:
         return self.altura(node.esquerda) - self.altura(node.direita) if node else 0
 
   
-    #Realiza uma rotação simples para a direita
+    #Realiza rotação direita
     def rotacao_direita(self, y):
         x = y.esquerda
         T2 = x.direita
@@ -31,7 +31,7 @@ class ArvoreAVL:
 
         
         return x
-    #Realiza uma rotação simples para a esquerda
+    #Realiza rotação esquerda
     def rotacao_esquerda(self, x):
         y = x.direita
         T2 = y.esquerda
