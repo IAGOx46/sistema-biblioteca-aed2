@@ -1,6 +1,6 @@
 from biblioteca.livro import Livro
 from biblioteca.node import Node
-import time
+
 
 class ArvoreAVL:
     def __init__(self):
