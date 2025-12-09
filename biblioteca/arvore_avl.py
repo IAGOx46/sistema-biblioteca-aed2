@@ -9,7 +9,7 @@ class ArvoreAVL:
     #Retorna a altura do nó informado
     def altura(self, node):
         
-        return node.altura if node else 0
+        return node.altura if node else 0  
     #Calcula o Fator de balanciamento
     def fator_balanceamento(self, node):
         
@@ -44,7 +44,7 @@ class ArvoreAVL:
   
         return y
 
-    #Método que insere um livro na AVL atualizando a raiz.
+    #Método de inserção
     def inserir(self, livro):
         self.raiz, sucesso = self._inserir_recurs(self.raiz, livro)
         return sucesso
@@ -52,9 +52,9 @@ class ArvoreAVL:
     #Insere recursivamente um novo nó
     def _inserir_recurs(self, node, livro):
         if node is None:
-            return Node(livro), True  # inserido com sucesso
+            return Node(livro), True  
 
-    # Comparação
+    # Comparação por Id
         if livro < node.livro:
             node.esquerda, sucesso = self._inserir_recurs(node.esquerda, livro)
 
@@ -67,7 +67,7 @@ class ArvoreAVL:
     # Atualiza altura
         node.altura = 1 + max(self.altura(node.esquerda), self.altura(node.direita))
 
-    # Calcula o balanceamento
+    # balanceamento
         balanceamento = self.fator_balanceamento(node)
 
     # Casos de rotação
@@ -229,18 +229,5 @@ class ArvoreAVL:
         self._buscar_por_titulo_rec(node.direita, termo, resultados, parcial)
 
 
-    def busca_com_tempo(self, livro):
-        inicio = time.perf_counter()
-        resultado = self.busca(livro)
-        fim = time.perf_counter()
-        return resultado, (fim - inicio) * 1000
-
-
-
-    def buscar_por_titulo_com_tempo(self, titulo, parcial=True):
-        inicio = time.perf_counter()
-        resultados = self.buscar_por_titulo(titulo, parcial=parcial)
-        fim = time.perf_counter()
-        tempo_ms = (fim - inicio) * 1000
-        return resultados, tempo_ms
+   
 
