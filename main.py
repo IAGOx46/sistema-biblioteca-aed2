@@ -2,7 +2,6 @@ import tkinter as tk
 from tkinter import ttk, messagebox, filedialog
 import json
 import platform
-
 from biblioteca.arvore_avl import ArvoreAVL
 from biblioteca.livro import Livro
 
@@ -86,8 +85,6 @@ def aplicar_estilos(root):
     style.configure("Material.TLabel", background=BG, foreground=TEXT, font=("Segoe UI", 10))
 
 
-
-
 class ArvoreDesenho:
     def __init__(self, canvas):
         self.canvas = canvas
@@ -162,7 +159,7 @@ class ArvoreDesenho:
 class App:
     def __init__(self, root):
         self.root = root
-        self.root.title("Biblioteca AVL — Material Blue")
+        self.root.title("Gerenciamento de Biblioteca AED II")
         self.root.geometry("1250x720")
         self.root.minsize(1000, 600)
         self.root.configure(bg=BG)

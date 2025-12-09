@@ -54,7 +54,7 @@ class ArvoreAVL:
         if node is None:
             return Node(livro), True  # inserido com sucesso
 
-    # Comparação correta pelo ID
+    # Comparação
         if livro < node.livro:
             node.esquerda, sucesso = self._inserir_recurs(node.esquerda, livro)
 
@@ -68,24 +68,24 @@ class ArvoreAVL:
         node.altura = 1 + max(self.altura(node.esquerda), self.altura(node.direita))
 
     # Calcula o balanceamento
-        balance = self.fator_balanceamento(node)
+        balanceamento = self.fator_balanceamento(node)
 
-    # Casos de rotação (AVL)
+    # Casos de rotação
     # LL
-        if balance > 1 and livro < node.esquerda.livro:
+        if balanceamento > 1 and livro < node.esquerda.livro:
             return self.rotacao_direita(node), sucesso
 
     # RR
-        if balance < -1 and livro > node.direita.livro:
+        if balanceamento < -1 and livro > node.direita.livro:
             return self.rotacao_esquerda(node), sucesso
 
     # LR
-        if balance > 1 and livro > node.esquerda.livro:
+        if balanceamento > 1 and livro > node.esquerda.livro:
             node.esquerda = self.rotacao_esquerda(node.esquerda)
             return self.rotacao_direita(node), sucesso
 
     # RL
-        if balance < -1 and livro < node.direita.livro:
+        if balanceamento < -1 and livro < node.direita.livro:
             node.direita = self.rotacao_direita(node.direita)
             return self.rotacao_esquerda(node), sucesso
 
